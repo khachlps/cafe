@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bean&Day — Coffee</title>
+
+  <!-- Fonts: красивый "presentation" шрифт + нейтральный для текста -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --beige:#f6efe6;
+      --coffee:#2f2219; /* основной тёмный панельный цвет (один для hero и меню) */
+      --muted:#8a6f5e;
+      --accent:#caa77a;
+      --radius:18px;
+      --card-radius:14px;
+    }
+
+    /* ------- Reset & base ------- */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--beige);
+      color: #222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+    }
+
+    /* Center page with max width and rounded corners for entire "sheet" */
+    .site {
+      max-width:1200px;
+      margin:0 auto;
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9));
+      border-radius: calc(var(--radius) + 6px);
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(47,34,26,0.12);
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 28px;
+      background: transparent;
+    }
+
+    /* logo small in header */
+    .logo-small{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo-small img{
+      height:56px;
+      width:auto;
+      border-radius:12px;
+      object-fit:contain;
+      box-shadow: 0 6px 20px rgba(47,34,26,0.12);
+    }
+    .nav{
+      display:flex;
+      gap:18px;
+      align-items:center;
+    }
+    .nav a{
+      color:var(--coffee);
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    /* ===== HERO ===== */
+    .hero{
+      position:relative;
+      min-height:68vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:60px 28px;
+      background-image: url(''); /* optional texture */
+      background-color: var(--beige);
+    }
+
+    /* main panel — shared color with menu: uses same .panel-bg */
+    .panel {
+      width:100%;
+      max-width:980px;
+      background: linear-gradient(180deg, rgba(47,34,26,0.96), rgba(47,34,26,0.96)); /* same color for hero + menu */
+      color:#fff;
+      padding:40px;
+      border-radius: var(--radius);
+      display:flex;
+      gap:28px;
+      align-items:center;
+      box-shadow: 0 20px 50px rgba(15,10,8,0.28);
+    }
+
+    .hero-left{flex:1; min-width:220px}
+    .hero-right{flex:1; display:flex; justify-content:center; align-items:center}
+
+    .brand{
+      font-family: 'Playfair Display', serif;
+      font-size:46px;
+      line-height:1;
+      letter-spacing: -0.6px;
+      margin:0 0 8px 0;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+    .slogan{
+      color: rgba(255,255,255,0.9);
+      font-size:18px;
+      margin:0 0 18px 0;
+      opacity:0.95;
+    }
+    .cta{
+      display:inline-flex;
+      gap:12px;
+      align-items:center;
+    }
+    .btn{
+      background:var(--accent);
+      color:var(--coffee);
+      padding:12px 18px;
+      border-radius:12px;
+      font-weight:700;
+      text-decoration:none;
+      box-shadow: 0 8px 20px rgba(202,167,122,0.18);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .btn:hover{ transform:translateY(-6px); box-shadow: 0 18px 36px rgba(202,167,122,0.22); }
+
+    .logo-hero{
+      max-width:220px;
+      border-radius:12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    }
+
+    /* ===== ABOUT ===== */
+    .section{
+      padding:48px 36px;
+    }
+    .about{
+      display:flex;
+      gap:20px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .about .text{flex:1; min-width:260px}
+    .about .photos{ display:flex; gap:12px; flex:1; min-width:260px; justify-content:center}
+    .about .photos img{ width:32%; border-radius:12px; object-fit:cover; box-shadow: 0 8px 20px rgba(18,12,8,0.08);}
+
+    /* ===== MENU (panel uses same color as hero's panel) ===== */
+    .menu-section{
+      padding:28px 36px 56px;
+      display:flex;
+      justify-content:center;
+    }
+    .menu-panel{
+      width:100%;
+      max-width:1100px;
+      background: linear-gradient(180deg, rgba(47,34,26,0.96), rgba(47,34,26,0.96));
+      color:#fff;
+      padding:28px;
+      border-radius: var(--radius);
+      box-shadow: 0 20px 50px rgba(15,10,8,0.26);
+    }
+
+    .menu-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:20px;
+    }
+
+    .menu-card{
+      background: rgba(255,255,255,0.03);
+      border-radius: var(--card-radius);
+      padding:12px;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      transition: transform .2s cubic-bezier(.2,.9,.3,1), box-shadow .2s ease;
+      transform-origin:center;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .menu-card:hover{
+      transform: translateY(-10px);
+      box-shadow: 0 20px 50px rgba(6,4,3,0.35);
+    }
+
+    .menu-card img{
+      width:100%;
+      height:160px;
+      object-fit:cover;
+      border-radius:10px;
+      display:block;
+    }
+    .menu-card .title{
+      font-weight:700;
+      color:#fff;
+      font-size:16px;
+      margin:0;
+    }
+    .menu-card .meta{
+      color: rgba(255,255,255,0.85);
+      font-size:14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+
+    /* ===== CONTACTS ===== */
+    .contacts{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+      align-items:start;
+    }
+    .contacts .box{
+      background: #fff;
+      padding:16px;
+      border-radius:12px;
+      box-shadow: 0 8px 30px rgba(18,12,8,0.06);
+    }
+    .map-embed{
+      width:100%;
+      height:280px;
+      border:0;
+      border-radius:10px;
+    }
+    .phone-btn{
+      display:inline-block;
+      margin-top:8px;
+      background:var(--coffee);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:700;
+    }
+
+    /* FORM */
+    .fake-form{display:flex; gap:8px; flex-direction:column}
+    .fake-form input{
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid #ddd;
+      font-size:14px;
+    }
+    .fake-form button{
+      padding:10px 12px;
+      border-radius:10px;
+      border:0;
+      background:var(--accent);
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    /* Footer */
+    footer{ padding:20px 28px; text-align:center; color:var(--muted); font-size:14px}
+
+    /* ===== Responsive ===== */
+    @media (max-width:1000px){
+      .menu-grid{ grid-template-columns: repeat(2, 1fr); }
+      .panel{ flex-direction:column; padding:26px; text-align:center }
+      .hero-right{ margin-top:6px }
+      .about .photos img{ width:48% }
+    }
+    @media (max-width:640px){
+      body{ padding:18px }
+      .menu-grid{ grid-template-columns:1fr; }
+      .contacts{ grid-template-columns: 1fr; }
+      .brand{ font-size:36px }
+      .logo-small img{ height:46px }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="site" id="top">
+
+    <header>
+      <div class="logo-small">
+        <!-- PUT YOUR LOGO PATH HERE -->
+        <img src="logo.png" alt="Bean&Day logo">
+        <div style="display:flex;flex-direction:column">
+          <span style="font-weight:700;color:var(--coffee)">Bean&Day</span>
+          <small style="color:var(--muted);font-size:12px">Coffee & Cozy</small>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#menu">Menu</a>
+        <a href="#contacts">Contacts</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Hero">
+      <div class="panel" role="region" aria-labelledby="brand">
+        <div class="hero-left">
+          <h1 id="brand" class="brand">Bean&amp;Day</h1>
+          <p class="slogan">A cup of coffee that makes your day better.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-start">
+            <a class="btn" href="#menu">View Menu</a>
+            <a class="btn" href="#contacts" style="background:transparent;border:2px solid rgba(255,255,255,0.12);color:#fff">Get Directions</a>
+          </div>
+        </div>
+
+        <div class="hero-right" aria-hidden="true">
+          <!-- Hero logo (larger) -->
+          <img class="logo-hero" src="logo.png" alt="Bean&Day logo large">
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="about">
+        <div class="text">
+          <h2 style="margin-top:0;color:var(--coffee);font-family:'Playfair Display',serif">About Bean&Day</h2>
+          <p style="color:#4b4038;line-height:1.6">
+            Bean&Day is a cozy coffee shop in the heart of the city. We roast our beans in-house and craft each drink by hand.
+            It's a quiet place to work and a bright spot for meetings — warm light, gentle music and excellent coffee.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu" class="menu-section" aria-label="Menu">
+      <div class="menu-panel">
+        <h2 style="margin:0 0 14px 0;font-family:'Playfair Display',serif;font-size:28px">Menu</h2>
+        <p style="margin:0 0 18px;color:rgba(255,255,255,0.9)">Our signature drinks and pastries — handcrafted daily.</p>
+
+        <div class="menu-grid" role="list">
+          <!-- Row 1 (3 items) -->
+          <article class="menu-card" role="listitem">
+            <img src="capp.jpg" alt="Cappuccino">
+            <h3 class="title">Cappuccino — 250 ml</h3>
+            <div class="meta">
+              <span>$3.50</span>
+              <small style="opacity:0.9">Espresso + foamed milk</small>
+            </div>
+          </article>
+
+          <article class="menu-card" role="listitem">
+            <img src="latte.JPG" alt="Latte">
+            <h3 class="title">Latte — 350 ml</h3>
+            <div class="meta">
+              <span>$4.00</span>
+              <small style="opacity:0.9">Smooth steamed milk</small>
+            </div>
+          </article>
+
+          <article class="menu-card" role="listitem">
+            <img src="flml.jpg" alt="Flat White">
+            <h3 class="title">Flat White</h3>
+            <div class="meta">
+              <span>$4.25</span>
+              <small style="opacity:0.9">Velvety microfoam</small>
+            </div>
+          </article>
+
+          <!-- Row 2 (3 items) -->
+          <article class="menu-card" role="listitem">
+            <img src="amer.jpg" alt="Americano">
+            <h3 class="title">Americano</h3>
+            <div class="meta">
+              <span>$2.50</span>
+              <small style="opacity:0.9">Bright and clear</small>
+            </div>
+          </article>
+
+          <article class="menu-card" role="listitem">
+            <img src="ecler.jpg" alt="Eclair">
+            <h3 class="title">Vanilla Éclair</h3>
+            <div class="meta">
+              <span>$3.00</span>
+              <small style="opacity:0.9">Light pastry & cream</small>
+            </div>
+          </article>
+
+          <article class="menu-card" role="listitem">
+            <img src="ny.jpg" alt="Cheesecake">
+            <h3 class="title">New York Cheesecake</h3>
+            <div class="meta">
+              <span>$5.00</span>
+              <small style="opacity:0.9">Classic rich slice</small>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section id="contacts" class="section">
+      <h2 style="margin-top:0;color:var(--coffee);font-family:'Playfair Display',serif">Contact & Visit</h2>
+      <div class="contacts" >
+        <div class="box">
+          <strong>Address</strong>
+          <p style="margin:8px 0;color:#444">123 Main Street, Your City, USA</p>
+
+          <strong>Hours</strong>
+          <p style="margin:8px 0;color:#444">Daily — 8:00 AM &ndash; 9:00 PM</p>
+
+          <strong>Phone</strong>
+          <p style="margin:8px 0">
+            <!-- American phone (tel:+1...) -->
+            <a class="phone-btn" href="tel:+15551234567">+1 (555) 123-4567</a>
+          </p>
+
+          <hr style="border:none;height:1px;background:#f0efe8;margin:12px 0;border-radius:2px">
+
+          <strong>Reserve / Call</strong>
+          <form id="contactForm" class="fake-form" onsubmit="return fakeSubmit(event)">
+            <input type="text" id="name" placeholder="Your name" required>
+            <input type="tel" id="tel" placeholder="Phone number" required>
+            <button type="submit">Request call</button>
+            <div id="formMsg" style="display:none;margin-top:8px;color:green;font-weight:700"></div>
+          </form>
+        </div>
+
+        <div class="box">
+          <strong>Find us</strong>
+          <!-- Replace the src with your Google Maps iframe link if you want exact location -->
+          <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0196936590183!2d-122.4194151846812!3d37.77492927975967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085818c1b0bedd1%3A0xcc8d3a6e1b86b5a6!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1627571234567" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map"></iframe>
+
+          <p style="margin-top:10px;color:#444">Prefer a map with a different address? Replace the iframe src with your Google Maps embed link.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Bean&Day — All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // fake submit handler
+    function fakeSubmit(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const tel  = document.getElementById('tel').value.trim();
+      const msg = document.getElementById('formMsg');
+      msg.style.display = 'block';
+      msg.textContent = 'Thanks, ' + (name||'friend') + '! We\'ll call you shortly at ' + (tel||'your number') + '.';
+      // clear inputs
+      e.target.reset();
+      // hide after a while
+      setTimeout(()=> msg.style.display = 'none', 6000);
+      return false;
+    }
+
+    // adjust scroll offset for header (if you want custom)
+    // (header is inside container and not fixed, so default smooth scroll works fine)
+
+    // Accessibility: focus visible for keyboard users
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Tab') document.body.classList.add('user-is-tabbing');
+    }, {once:true});
+  </script>
+</body>
+</html>
